@@ -77,6 +77,19 @@ curl https://sturdy-space-halibut-5g6g6rx3vqxg-4000.app.github.dev/v1/chat/compl
   }'
 ```
 
+OR
+
+```bash
+curl https://sturdy-space-halibut-5g6g6rx3vqxg-4000.app.github.dev/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-changeme-masterkey" \
+  -d '{
+    "model": "claude-haiku",
+    "messages": [{"role": "user", "content": "Hello!"}],
+    "stream": true
+  }'
+```
+
 ---
 
 ## Configuration
