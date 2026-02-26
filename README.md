@@ -2,7 +2,7 @@
 
 A ready-to-use [LiteLLM](https://docs.litellm.ai/) proxy setup for GitHub Codespaces. Spin up a unified OpenAI-compatible API gateway in front of multiple LLM providers in seconds.
 
-[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/YOUR_ORG/YOUR_REPO)
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/lbrenman/litellm-codespace)
 
 ---
 
