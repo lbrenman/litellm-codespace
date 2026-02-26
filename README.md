@@ -57,6 +57,26 @@ bash scripts/test.sh claude-haiku
 
 Or open `requests.http` in VS Code and use the **REST Client** extension to send requests directly.
 
+```bash
+curl http://localhost:4000/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-changeme-masterkey" \
+  -d '{
+    "model": "claude-haiku",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
+```bash
+curl https://sturdy-space-halibut-5g6g6rx3vqxg-4000.app.github.dev/v1/chat/completions \
+  -H "Content-Type: application/json" \
+  -H "Authorization: Bearer sk-changeme-masterkey" \
+  -d '{
+    "model": "claude-haiku",
+    "messages": [{"role": "user", "content": "Hello!"}]
+  }'
+```
+
 ---
 
 ## Configuration
