@@ -54,8 +54,10 @@ router_settings:
 # ── General Settings ───────────────────────────────────────────────────
 general_settings:
   master_key: os.environ/LITELLM_MASTER_KEY
-  database_url: "sqlite:////app/data/litellm.db"
-  store_model_in_db: true
+  # No database needed for basic proxy usage.
+  # To enable spend tracking / virtual keys, install prisma and uncomment:
+  # database_url: "sqlite:////workspace/data/litellm/litellm.db"
+  # store_model_in_db: true
 
   # Uncomment to enable request/response logging
   # callbacks: ["langfuse"]
