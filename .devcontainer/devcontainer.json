@@ -1,0 +1,51 @@
+{
+  "name": "LiteLLM Proxy",
+  "dockerComposeFile": "docker-compose.yml",
+  "service": "litellm",
+  "workspaceFolder": "/workspace",
+
+  "features": {
+    "ghcr.io/devcontainers/features/common-utils:2": {
+      "installZsh": true,
+      "installOhMyZsh": true
+    }
+  },
+
+  "forwardPorts": [4000, 8080],
+  "portsAttributes": {
+    "4000": {
+      "label": "LiteLLM Proxy",
+      "onAutoForward": "notify"
+    },
+    "8080": {
+      "label": "LiteLLM UI",
+      "onAutoForward": "notify"
+    }
+  },
+
+  "postCreateCommand": "bash .devcontainer/post-create.sh",
+  "postStartCommand": "bash .devcontainer/post-start.sh",
+
+  "customizations": {
+    "vscode": {
+      "extensions": [
+        "ms-azuretools.vscode-docker",
+        "humao.rest-client",
+        "42crunch.vscode-openapi"
+      ],
+      "settings": {
+        "terminal.integrated.defaultProfile.linux": "zsh"
+      }
+    }
+  },
+
+  "remoteEnv": {
+    "LITELLM_MASTER_KEY": "${localEnv:LITELLM_MASTER_KEY}",
+    "OPENAI_API_KEY": "${localEnv:OPENAI_API_KEY}",
+    "ANTHROPIC_API_KEY": "${localEnv:ANTHROPIC_API_KEY}",
+    "AZURE_API_KEY": "${localEnv:AZURE_API_KEY}",
+    "AZURE_API_BASE": "${localEnv:AZURE_API_BASE}",
+    "AZURE_API_VERSION": "${localEnv:AZURE_API_VERSION}",
+    "GEMINI_API_KEY": "${localEnv:GEMINI_API_KEY}"
+  }
+}

@@ -1,0 +1,42 @@
+# ── Secrets & Environment ──────────────────────────────────────────────
+.env
+.env.local
+.env.*.local
+
+# ── LiteLLM Persistent Data ────────────────────────────────────────────
+data/litellm/*.db
+data/litellm/*.db-shm
+data/litellm/*.db-wal
+
+# ── Python ─────────────────────────────────────────────────────────────
+__pycache__/
+*.py[cod]
+*.pyo
+.venv/
+venv/
+env/
+*.egg-info/
+dist/
+build/
+
+# ── Node (if adding a frontend/test harness) ───────────────────────────
+node_modules/
+npm-debug.log*
+yarn-error.log
+
+# ── Docker ─────────────────────────────────────────────────────────────
+*.log
+docker-compose.override.yml
+
+# ── OS ─────────────────────────────────────────────────────────────────
+.DS_Store
+Thumbs.db
+
+# ── VS Code ────────────────────────────────────────────────────────────
+.vscode/*
+!.vscode/extensions.json
+!.vscode/settings.json
+
+# ── JetBrains ──────────────────────────────────────────────────────────
+.idea/
+*.iml
