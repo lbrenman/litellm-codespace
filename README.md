@@ -114,6 +114,57 @@ cp .env.example .env
 
 ---
 
+## Upgrade LiteLLM
+
+Your config lives in /workspace/config/litellm_config.yaml which is part of your repo — it’s completely independent of the LiteLLM install. So upgrading is just:
+
+pip install --upgrade "litellm[proxy]"
+
+
+Then restart the proxy:
+
+bash scripts/start.sh
+
+
+That’s it. Nothing is lost because your config, .env, and data directory are all in /workspace which is bind-mounted from your repo, not inside the Python package.
+To check your current version before/after:
+
+litellm --version
+
+
+If you want to pin to a specific version (recommended for stability):
+
+pip install "litellm[proxy]==1.76.1"
+
+
+You can find the latest stable version tags at github.com/BerriAI/litellm/releases.
+To make the version persistent so every new Codespace gets the right version, update the Dockerfile:
+
+RUN pip install --no-cache-dir "litellm[proxy]==1.76.1" httpie
+
+
+That way you’re not relying on latest which can introduce breaking changes between Codespace rebuilds.​​​​​​​​​​​​​​​​
+
+## OAS Doc
+
+LiteLLM automatically generates a Swagger/OpenAPI doc when the proxy is running. Just open:
+
+http://localhost:4000/docs
+
+
+That’s a full interactive Swagger UI covering every endpoint — chat completions, models, health, virtual keys, spend tracking, etc. There’s also a ReDoc version at:
+
+http://localhost:4000/redoc
+
+
+And you can pull the raw OpenAPI JSON spec directly:
+
+curl http://localhost:4000/openapi.json
+
+
+In your Codespace, just make sure port 4000 is forwarded and the proxy is running, then open the forwarded URL with /docs appended.​​​​​​​​​​​​​​​​
+
+
 ## File Structure
 
 ```
