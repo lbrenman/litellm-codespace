@@ -1,27 +1,17 @@
 #!/bin/bash
 
-echo "🔄 LiteLLM Codespace starting..."
-
-# Ensure data directory exists
 mkdir -p /workspace/data/litellm
 
-# Load .env using export on each line (works in non-interactive shells)
-if [ -f /workspace/.env ]; then
-  while IFS='=' read -r key value; do
-    # Skip comments and empty lines
-    [[ "$key" =~ ^#.*$ ]] && continue
-    [[ -z "$key" ]] && continue
-    # Strip inline comments and surrounding quotes from value
-    value=$(echo "$value" | sed 's/#.*//' | xargs)
-    export "$key=$value"
-  done < /workspace/.env
-fi
+LOG=/workspace/data/litellm/autostart.log
 
-# Auto-start LiteLLM if LITELLM_AUTOSTART=true
-if [ "${LITELLM_AUTOSTART}" = "true" ]; then
-  echo "⚡ Auto-starting LiteLLM proxy..."
-  nohup bash /workspace/scripts/start.sh > /workspace/data/litellm/autostart.log 2>&1 &
-  echo "   Logs: /workspace/data/litellm/autostart.log"
-fi
+# Load .env
+while IFS= read -r line; do
+  [[ "$line" =~ ^#.*$ ]] && continue
+  [[ -z "$line" ]] && continue
+  export "$line"
+done < /workspace/.env
 
-echo "✅ Ready."
+# Use setsid to fully detach litellm from this shell session
+setsid litellm --config /workspace/config/litellm_config.yaml --port 4000 > "$LOG" 2>&1 < /dev/null &
+
+echo "✅ LiteLLM started. Logs: $LOG"
