@@ -147,9 +147,19 @@ That way you’re not relying on latest which can introduce breaking changes bet
 
 ## OAS Doc
 
-LiteLLM automatically generates a Swagger/OpenAPI doc when the proxy is running. Just open:
+LiteLLM automatically generates a Swagger/OpenAPI doc when the proxy is running.
+
+The documentation says that the /docs endpoint is disabled by default in newer versions of LiteLLM unless you explicitly enable it. Add this to your litellm_config.yaml under general_settings:
+
+```yaml
+general_settings:
+  master_key: os.environ/LITELLM_MASTER_KEY
+  enable_swagger_ui: true
+```
 
 http://localhost:4000/docs
+
+> Note that for me, I found the OAS Doc at http://localhost:4000 without needing to explicitly enable it as described above
 
 
 That’s a full interactive Swagger UI covering every endpoint — chat completions, models, health, virtual keys, spend tracking, etc. There’s also a ReDoc version at:
@@ -164,6 +174,30 @@ curl http://localhost:4000/openapi.json
 
 In your Codespace, just make sure port 4000 is forwarded and the proxy is running, then open the forwarded URL with /docs appended.​​​​​​​​​​​​​​​​
 
+## Adding Grok Models
+
+LiteLLM supports Grok (xAI). Add it to your litellm_config.yaml:
+
+```yaml
+- model_name: grok-beta
+    litellm_params:
+      model: xai/grok-beta
+      api_key: os.environ/XAI_API_KEY
+```
+
+Then add your key to .env:
+
+```bash
+XAI_API_KEY=xai-your-key-here
+```
+
+And add it to devcontainer.json under remoteEnv so it gets picked up from Codespace Secrets:
+
+```bash
+"XAI_API_KEY": "${localEnv:XAI_API_KEY}"
+```
+
+Restart the proxy and you're good. You can get an xAI API key at console.x.ai.
 
 ## File Structure
 
