@@ -4,11 +4,14 @@ set -e
 SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 ROOT_DIR="$(dirname "$SCRIPT_DIR")"
 
-# Load .env
+# Load .env - works in both interactive and non-interactive shells
 if [ -f "$ROOT_DIR/.env" ]; then
-  set -a
-  source "$ROOT_DIR/.env"
-  set +a
+  while IFS= read -r line; do
+    # Skip comments and empty lines
+    [[ "$line" =~ ^#.*$ ]] && continue
+    [[ -z "$line" ]] && continue
+    export "$line"
+  done < "$ROOT_DIR/.env"
 fi
 
 # Ensure data dir exists

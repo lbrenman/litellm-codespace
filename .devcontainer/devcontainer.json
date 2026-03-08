@@ -7,7 +7,6 @@
   "workspaceMount": "source=${localWorkspaceFolder},target=/workspace,type=bind,consistency=cached",
 
   "mounts": [
-    // Persist the SQLite DB across container rebuilds using a named volume
     "source=litellm-data,target=/workspace/data/litellm,type=volume"
   ],
 
@@ -20,7 +19,7 @@
   },
 
   "postCreateCommand": "bash .devcontainer/post-create.sh",
-  "postStartCommand": "bash .devcontainer/post-start.sh",
+  "postStartCommand": "nohup bash -c 'while IFS= read -r line; do [[ \"$line\" =~ ^#.*$ ]] && continue; [[ -z \"$line\" ]] && continue; export \"$line\"; done < /workspace/.env; litellm --config /workspace/config/litellm_config.yaml --port 4000' > /workspace/data/litellm/autostart.log 2>&1 &",
 
   "remoteEnv": {
     "LITELLM_MASTER_KEY": "${localEnv:LITELLM_MASTER_KEY}",
